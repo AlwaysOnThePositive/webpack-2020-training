@@ -60,6 +60,19 @@ const babelOptions = (preset) => {
   return options;
 };
 
+const jsLoaders = () => {
+  const loaders = [
+    {
+      loader: "babel-loader",
+      options: babelOptions(),
+    },
+  ];
+
+  if (isDev) {
+    loaders.push("eslint-loader");
+  }
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
@@ -84,6 +97,7 @@ module.exports = {
     open: true,
     hot: isDev,
   },
+  devtool: isDev ? "source-map" : false,
   plugins: [
     new HTMLWebpackPlugin({
       template: "./index.html",
@@ -137,10 +151,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: babelOptions(),
-        },
+        use: jsLoaders(),
       },
       {
         test: /\.ts$/,
