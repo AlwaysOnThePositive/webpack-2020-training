@@ -4,6 +4,7 @@ import Post from "@models/Post.js";
 // import xml from "./assets/data.xml";
 // import csv from "./assets/data.csv";
 import WebpackImage from "@/assets/webpack-logo.png";
+import "./babel";
 import "./styles/style.css";
 import "./styles/less.less";
 import "./styles/scss.scss";

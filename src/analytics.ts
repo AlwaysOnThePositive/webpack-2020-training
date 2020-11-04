@@ -1,10 +1,10 @@
 import * as $ from "jquery";
 
-function createAnalytics() {
+function createAnalytics(): object {
   let counter = 0;
   let isDestoyed = false;
 
-  const listener = () => counter++;
+  const listener = (): number => counter++;
   $(document).on("click", listener);
 
   return {
@@ -18,4 +18,4 @@ function createAnalytics() {
   };
 }
 
-window.analytics = createAnalytics();
+window["analytics"] = createAnalytics();

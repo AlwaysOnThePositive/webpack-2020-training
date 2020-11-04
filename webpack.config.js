@@ -47,12 +47,25 @@ const loaders = (extra) => {
   return loaders;
 };
 
+const babelOptions = (preset) => {
+  const options = {
+    presets: ["@babel/preset-env"],
+    plugins: ["@babel/plugin-proposal-class-properties"],
+  };
+
+  if (preset) {
+    options.presets.push(preset);
+  }
+
+  return options;
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
   entry: {
-    main: "./index.js",
-    analytics: "./analytics.js",
+    main: ["@babel/polyfill", "./index.js"],
+    analytics: "./analytics.ts",
   },
   output: {
     filename: filename("js"),
@@ -68,6 +81,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 4200,
+    open: true,
     hot: isDev,
   },
   plugins: [
@@ -114,11 +128,27 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: loaders('less-loader'),
+        use: loaders("less-loader"),
       },
       {
         test: /\.s[ac]ss$/,
-        use: loaders('sass-loader'),
+        use: loaders("sass-loader"),
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: babelOptions(),
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: babelOptions("@babel/preset-typescript"),
+        },
       },
     ],
   },
