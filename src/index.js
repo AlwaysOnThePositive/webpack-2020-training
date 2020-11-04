@@ -5,6 +5,8 @@ import Post from "@models/Post.js";
 // import csv from "./assets/data.csv";
 import WebpackImage from "@/assets/webpack-logo.png";
 import "./styles/style.css";
+import "./styles/less.less";
+import "./styles/scss.scss";
 
 const post = new Post("Post title 1", WebpackImage);
 $("pre").html(post.toString());
